@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price calculator</title>
+    <script>
+        async function clickthis() {
+            const input = document.getElementById('input').value
+            const btn = document.getElementById('btn')
+            const output = document.getElementById('price')
+            const encrypt = btoa(input)
+            console.log(encrypt)
+            await fetch(`/${encrypt}`, {
+                method: 'POST'
+            }).then(text => {
+                console.log(text.text().then(encrypt => {
+                    const decrypt = atob(encrypt)
+                    output.innerHTML = 'It costs €' + decrypt
+                }).catch(err => console.error(err)))
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <input id="input" type="url" required>
+    <button onclick="clickthis()" id="btn">Click here to get the price</button>
+    <div>
+        <p id="price">
+
+        </p>
+    </div>
+</body>
+
+</html>

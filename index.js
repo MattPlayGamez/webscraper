@@ -2,16 +2,32 @@
 require('dotenv/config')
 const cheerio = require('cheerio')
 const scraper = require('./scraper')
+const express = require('express')
+const app = express()
 
-const url = 'https://www.bol.com/nl/nl/p/asus-tuf-gaming-f17-fx706heb-hx114t-gaming-laptop-17-3-inch-144-hz/9300000047872025/?s2a='
+app.use(express.json())
+app.set('view-engine', 'ejs')
 
-scraper(url).then(content => {
-    const $ = cheerio.load(content)
-    const rawprice = $('span.promo-price').text()
-    const removelines = rawprice.replace('\n', '')
-    const removespaces = removelines.replace('  ', '')
-    const changedash = removespaces.replace('-', '00')
-    const price = Number(changedash)
-    const euros = price / 100
-    console.log('It costs €' + euros)
-}).catch(err => console.error(err))
+app.get('/', (req, res) => {
+    res.render('index.ejs')
+})
+
+app.post('/:id', (req, res) => {
+    const id = req.params.id
+    const rawdecrypt = atob(id)
+    const decrypt = rawdecrypt.split('#')[0]
+    scraper(decrypt).then(content => {
+        const $ = cheerio.load(content)
+        const rawprice = $('span.promo-price').text()
+        const removelines = rawprice.replace('\n', '')
+        const removespaces = removelines.replace('  ', '')
+        const changedash = removespaces.replace('-', '00')
+        const price = Number(changedash)
+        const euros = price / 100
+        const encrypt = btoa(euros)
+        // const encrypt = btoa(euros)
+        res.send(encrypt)
+    }).catch(err => console.error(err))
+})
+
+app.listen(process.env.PORT)
