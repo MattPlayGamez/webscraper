@@ -9,11 +9,15 @@
     <script>
         async function clickthis() {
             const input = document.getElementById('input').value
+            const email = document.getElementById('email').value
+            const maxprice = document.getElementById('maxprice').value
             const btn = document.getElementById('btn')
             const output = document.getElementById('price')
             const encrypt = btoa(input)
+            const encrypt2 = btoa(email)
+            const encrypt3 = btoa(maxprice)
             console.log(encrypt)
-            await fetch(`/${encrypt}`, {
+            await fetch(`/${encrypt}/${encrypt2}/${encrypt3}`, {
                 method: 'POST'
             }).then(text => {
                 console.log(text.text().then(encrypt => {
@@ -26,7 +30,18 @@
 </head>
 
 <body>
-    <input id="input" type="url" required>
+    <div>
+        <label for="input">What is the Bol.com url? </label>
+        <input id="input" type="url" required>
+    </div>
+    <div>
+        <label for="email">What's your email? </label>
+        <input type="email" name="email" id="email" required>
+    </div>
+    <div>
+        <label for="maxprice">What is the max price (in PENNIES)? </label>
+        <input type="number" name="maxprice" id="maxprice" min="1" required>
+    </div>
     <button onclick="clickthis()" id="btn">Click here to get the price</button>
     <div>
         <p id="price">
