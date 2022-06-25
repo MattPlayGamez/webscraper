@@ -1,0 +1,21 @@
+{
+  "name": "bol.com_scraper",
+  "version": "1.0.0",
+  "description": "a webscraper for bol.com",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "keywords": [
+    "webscraper",
+    "Node.JS"
+  ],
+  "author": "Matt",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.11",
+    "dotenv": "^16.0.1",
+    "puppeteer": "^15.1.0",
+    "shortid": "^2.2.16"
+  }
+}
