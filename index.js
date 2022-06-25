@@ -47,7 +47,8 @@ async function sendMail(from, to, euros, maxprice) {
         from: from,
         to: to,
         subject: 'dropped price',
-        text: 'The price has dropped to €' + euros + '\nWhich is under your max price of €' + maxprice
+        // text: 'The price has dropped to €' + euros + '\nWhich is under your max price of €' + maxprice
+        text: `The price has dropped to €${euros}\n Which is under your max price of €${maxprice}`
     }
     await sendgrid.send(mail)
 }
